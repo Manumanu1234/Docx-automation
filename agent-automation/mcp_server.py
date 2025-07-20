@@ -54,20 +54,11 @@ async def run_agent(message: str) -> None:
             end_time = datetime.datetime.now()
             print("End time:", end_time)
 
-def AgentCall(input):
+async def AgentCall(input):
     try:
-        # Avoid "no current event loop" deprecation warning
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-
-        loop.run_until_complete(
-            run_agent(
-                input
-            )
-        )
+        await run_agent(input)
     except RuntimeError as e:
         if "Event loop is closed" in str(e):
             print("No problem: Event loop was already closed.")
         else:
             raise
-    

@@ -4,3 +4,6 @@ class ImgGen(BaseModel):
 
 class DocFormat(BaseModel):
     doc_base:str
+
+class ProgramGen(BaseModel):
+    program_aim:str

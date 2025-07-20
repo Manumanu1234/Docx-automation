@@ -87,28 +87,6 @@ def MappingFun(result):
     return my_dict2
         
 def DataFilling(my_dict2):
-    my_dict2['Experiment Name']="scan.c"
-    my_dict2['Experiment No']="2"
-    my_dict2['Date']="20-15-25"
-    my_dict2['Compiler Name']="gcc"
-    my_dict2['Aim of the Program']='write a scan program to demonstrate the cpu scheduling'
-    my_dict2['Program']="""
-    #include<stdio.h> 
-    #include<stdlib.h> 
-    int main(){ 
-    int n, m, i, j, allocation[20][20], available[20], max[20][20]; 
-    printf("Enter the number of processes: "); 
-    scanf("%d", &n); 
-    printf("Enter the number of resources: "); 
-    scanf("%d", &m); 
-    printf("Enter the allocation matrix:\n"); 
-    for(i = 0; i < n; i++) { 
-    for(j = 0; j < m; j++) { 
-    scanf("%d", &allocation[i][j]); 
-    } 
-    } 
-    """
-    my_dict2['Output']='image'
     final_dict={}
     for key,val in my_dict2.items():
         for field_name, value in response:
@@ -121,14 +99,14 @@ def Promptifying(final_dict):
     prompt_for_agent = f"""
                 You are provided with a `.docx` file located at:
 
-                D:/Collage Automation Project/agent-automation/Sample_template.docx
+                D:/Collage Automation Project/agent-automation/userFiles/Sample_template.docx
 
                 **IMPORTANT INSTRUCTIONS — FOLLOW STRICTLY**
                 - Do **NOT** create a new file. Work on the provided file only.
                 - Use only the tools given to you.
                 - Do **NOT** alter formatting, layout, or styles.
                 - Do **NOT** save a copy. Simply overwrite/save the current file.
-
+                - If you instruct to add image user add_picture tool to add image in the document.
                 ---
 
                 **TASKS TO PERFORM**
@@ -136,11 +114,10 @@ def Promptifying(final_dict):
                 1. Analyze the structure of the .docx file.
                 2. Locate all comments in the document.
                 3. Replace each comment with its corresponding value from the dictionary below:
-
+                4. if the value is output or paste output then add the image in the document using add_picture tool .
                 {chr(10).join([f"{k} with  {v}" for k, v in final_dict.items()])}
 
-                4. Once all replacements are done, save the file and stop the process.
-
+                5. Once all replacements are done, save the file and stop the process.
                 ---
 
                 **NOTES**
@@ -154,8 +131,7 @@ def MainAnalysis(filename:str):
     result=DocumentProcessing(filename=filename)
     result2=MappingFun(result)
     #new endpoint
-    final_dict=DataFilling(result2)
-    prompt=Promptifying(final_dict)
-    AgentCall(prompt)
-filename = "Sample_template.docx"
-MainAnalysis(filename)
+    # final_dict=DataFilling(result2)
+    # prompt=Promptifying(final_dict)
+    # AgentCall(prompt)
+    return result2

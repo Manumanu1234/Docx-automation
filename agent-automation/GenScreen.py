@@ -28,7 +28,7 @@ def ScreenShotGeneration():
     time.sleep(5) 
 
 
-    screenshot_path = os.path.abspath("powershell_screenshot.png")
+    screenshot_path = os.path.abspath(os.path.join("userFiles", "output_image.png"))
     pyautogui.screenshot(screenshot_path)
     image = Image.open(screenshot_path)
 
